@@ -19,15 +19,19 @@
 
   import GamesGallery from './components/GamesGallery.vue';
 
+
   export default {
     name : 'App',
 
     components : {
-      GamesGallery 
+      GamesGallery,
+
     }
+    
 
 
   }
+  
 
 </script>
 
@@ -36,7 +40,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
 
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -71,7 +75,6 @@ h1{
   padding-top: 3rem;
   flex-wrap: wrap;
 }
-
 
 
 
