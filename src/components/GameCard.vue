@@ -41,8 +41,6 @@ export default {
         genre: String,
         platform: String,
         release_date: Date,
-        
-        gridView: Boolean
     },
 
     data() {
@@ -53,7 +51,6 @@ export default {
     },
  
 }
-
 
 </script>
 
