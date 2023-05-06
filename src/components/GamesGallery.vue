@@ -5,6 +5,8 @@
     v-model:gamesFilterPlat="gamesFilterPlat"
     v-model:gamesFilterGenre="gamesFilterGenre"
     :gamesFilteredGenreData="gamesFilteredGenreData"
+    
+    v-model:gridView="gridView"
     />
 
 
@@ -19,7 +21,7 @@
             :short_description="game.short_description"  
             :genre="game.genre"
             :platform="game.platform" 
-
+            :gridView="gridView"
         />
     
              
@@ -55,17 +57,17 @@
         GalleryOptions
     },
 
-   
     data() {
         return {
             gamesData : [],
-            
-            gridViews:true,
-        
+            Favorites : [],
+         
             search: localStorage.getItem("search") || "",
 			gamesSortType: localStorage.getItem("gamesSortType") || "default",
             gamesFilterPlat: localStorage.getItem("gamesFilterPlat") || "All",
             gamesFilterGenre: localStorage.getItem("gamesFilterGenre") || "default",
+
+            gridView: localStorage.getItem("gridView") === "true",
         }
     },
 

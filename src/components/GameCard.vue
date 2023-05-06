@@ -1,6 +1,5 @@
 <template>
 
-
     <div v-show="gridView" class="game-card">
         <img :src="thumbnail" :alt="title">
         <h3> {{ title }} </h3>
@@ -41,13 +40,8 @@ export default {
         genre: String,
         platform: String,
         release_date: Date,
-    },
+        gridView: Boolean,
 
-    data() {
-        return {
-            gamesData : [],
-            search:'',
-        }
     },
  
 }
