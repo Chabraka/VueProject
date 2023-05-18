@@ -14,7 +14,6 @@
         
 
         <div>
-            <h3> {{ isLiked }} </h3>
             <h3> {{ title }} </h3>
             <p> {{ short_description }} </p>
             <div class="details-game">
@@ -52,16 +51,18 @@ export default {
        
     }, 
 
-    emits: ["update:isLiked"],
+    emits: ["toggleLike"],
 
     methods: {
 
+        
+
         onIsLikedChanged() {
-
-            this.$emit('update:isLiked', {gameId: this.id,isLiked: !this.isLiked});
+            console.log("Emit Like: " + this.id);
+            this.$emit('toggleLike', this.id);
+        },
            
-		},
-
+	
     },
  
 }

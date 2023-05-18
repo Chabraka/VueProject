@@ -22,7 +22,9 @@
             :genre="game.genre"
             :platform="game.platform"
 
-            v-model:isLiked="game.isLiked"
+            @toggleLike="toggleLike(game.id)" 
+            :isLiked="isGameLiked(game.id)"
+       
 
             :gridView="gridView"
             
@@ -70,7 +72,7 @@
         return {
             gamesData : [],
 
-            //favorites : [],
+            favorites : [],
 
             search: localStorage.getItem("search") || "",
 			gamesSortType: localStorage.getItem("gamesSortType") || "default",
@@ -78,9 +80,7 @@
             gamesFilterGenre: localStorage.getItem("gamesFilterGenre") || "default",
 
             gridView: localStorage.getItem("gridView") === "true",
-
-
-
+           
         }
     },
 
@@ -90,15 +90,10 @@
 
         this.retrieveGamesData();
 
-        const isLikedCookie = getCookie(`isLiked_${this.id}`);
-        if (isLikedCookie) {
-            this.isLiked = isLikedCookie === true;
-        }
-
-        /*const favoritesCookie = getCookie('favorites');
+        const favoritesCookie = getCookie('favorites');
         if (favoritesCookie) {
-            this.$emit('update:favorites', JSON.parse(favoritesCookie));
-        }*/
+            this.favorites = JSON.parse(favoritesCookie);
+        }
 
     },
 
@@ -150,24 +145,33 @@
             this.gamesData = await getGamesData()
         },
 
+        isGameLiked(gameId) {
+            return this.favorites.includes(gameId);
+        },
+
         toggleLike(gameId) {
             const game = this.gamesFilteredGenreData.find(game => game.id === gameId);
             if (game) {
                 game.isLiked = !game.isLiked;
-                setCookie('isLiked', JSON.stringify(game.isLiked), 30);
-                console.log(document.cookie);
-                /*if (game.isLiked) {
+                
+                if (game.isLiked) {
                     this.favorites.push(game.id);
                 } else {
                     const index = this.favorites.indexOf(game.id);
                     if (index !== -1) {
                         this.favorites.splice(index, 1);
                     }
+                }
+                //const isliked = Boolean(!game.isLiked);
+                //console.log(this.isLiked);
+                setCookie('favorites', JSON.stringify(this.favorites), 30);
+                
+                console.log(document.cookie);
+                /*var Cookies = document.cookie.split(';');
+                // set past expiry to all cookies
+                for (var i = 0; i < Cookies.length; i++) {
+                document.cookie = Cookies[i] + "=; expires="+ new Date(0).toUTCString();
                 }*/
-                const isliked = Boolean(!game.isLiked);
-                console.log(this.isLiked);
-                return isliked;
-                //setCookie('favorites', JSON.stringify(this.favorites), 30);
             }
         },
         
