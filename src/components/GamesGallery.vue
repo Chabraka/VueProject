@@ -22,7 +22,7 @@
             :genre="game.genre"
             :platform="game.platform"
 
-            v-model:isliked="game.isLiked"
+            v-model:isLiked="game.isLiked"
 
             :gridView="gridView"
             
@@ -165,6 +165,7 @@
                     }
                 }*/
                 const isliked = Boolean(!game.isLiked);
+                console.log(this.isLiked);
                 return isliked;
                 //setCookie('favorites', JSON.stringify(this.favorites), 30);
             }
