@@ -5,7 +5,6 @@
     v-model:gamesFilterPlat="gamesFilterPlat"
     v-model:gamesFilterGenre="gamesFilterGenre"
     :gamesFilteredGenreData="gamesFilteredGenreData"
-    
     v-model:gridView="gridView"
     />
 
@@ -16,16 +15,22 @@
 
             v-for="game in gamesFilteredGenreData" 
             :key="game.id"
+            :id="game.id"
             :title="game.title"
             :thumbnail="game.thumbnail"
             :short_description="game.short_description"  
             :genre="game.genre"
-            :platform="game.platform" 
+            :platform="game.platform"
+
+            v-model:isliked="game.isLiked"
+
             :gridView="gridView"
+            
         />
     
              
     </div>
+
 
     <div v-if="search && searchingList.length == []">
         <h2>Oups</h2>
@@ -43,8 +48,12 @@
   </template>
   
   <script>
+
+    import { getCookie, setCookie } from '@/services/cookies/cookieUtils';
   
     import { getGamesData } from '@/services/api/gamesAPI';
+
+    
 
     import GalleryOptions from './GalleryOptions.vue'
     import GameCard from './GameCard.vue';
@@ -60,15 +69,37 @@
     data() {
         return {
             gamesData : [],
-            Favorites : [],
-         
+
+            //favorites : [],
+
             search: localStorage.getItem("search") || "",
 			gamesSortType: localStorage.getItem("gamesSortType") || "default",
             gamesFilterPlat: localStorage.getItem("gamesFilterPlat") || "All",
             gamesFilterGenre: localStorage.getItem("gamesFilterGenre") || "default",
 
             gridView: localStorage.getItem("gridView") === "true",
+
+
+
         }
+    },
+
+    
+
+    created: function(){
+
+        this.retrieveGamesData();
+
+        const isLikedCookie = getCookie(`isLiked_${this.id}`);
+        if (isLikedCookie) {
+            this.isLiked = isLikedCookie === true;
+        }
+
+        /*const favoritesCookie = getCookie('favorites');
+        if (favoritesCookie) {
+            this.$emit('update:favorites', JSON.parse(favoritesCookie));
+        }*/
+
     },
 
     computed: {
@@ -112,21 +143,36 @@
         }
     },
 
-
-    created: function(){
-        this.retrieveGamesData()
-    },
   
     methods: {
       
         async retrieveGamesData(){
             this.gamesData = await getGamesData()
         },
+
+        toggleLike(gameId) {
+            const game = this.gamesFilteredGenreData.find(game => game.id === gameId);
+            if (game) {
+                game.isLiked = !game.isLiked;
+                setCookie('isLiked', JSON.stringify(game.isLiked), 30);
+                console.log(document.cookie);
+                /*if (game.isLiked) {
+                    this.favorites.push(game.id);
+                } else {
+                    const index = this.favorites.indexOf(game.id);
+                    if (index !== -1) {
+                        this.favorites.splice(index, 1);
+                    }
+                }*/
+                const isliked = Boolean(!game.isLiked);
+                return isliked;
+                //setCookie('favorites', JSON.stringify(this.favorites), 30);
+            }
+        },
+        
     },
-  
   }
  
-
   </script>
   
   <style scoped>

@@ -6,16 +6,15 @@
     </div>
 
     <div v-show="!gridView" class="game-list">
-        <div>
+        <div class="image_like">
             <img :src="thumbnail" :alt="title">
-            <span>
-                <i class="fa-regular fa-heart fa-lg"></i>
-                <i class="fa-solid fa-heart fa-lg"></i>
-            </span>
+            <div class="like" :class="{ 'anim-like': isLiked }" @click="onIsLikedChanged"></div>
+            
         </div>
         
 
         <div>
+            <h3> {{ isLiked }} </h3>
             <h3> {{ title }} </h3>
             <p> {{ short_description }} </p>
             <div class="details-game">
@@ -30,17 +29,38 @@
 
 <script>
 
+//import { getCookie, setCookie } from '@/services/cookies/cookieUtils';
+
 export default {
     name : 'GameCard',
 
     props : {
+        id : Number,
         title : String,
         thumbnail : String,
         short_description : String,
         genre: String,
         platform: String,
         release_date: Date,
+
+        isLiked: {
+            type: Boolean,
+            default: false 
+        },
+
         gridView: Boolean,
+       
+    }, 
+
+    emits: ["update:isLiked"],
+
+    methods: {
+
+        onIsLikedChanged() {
+
+            this.$emit('update:isLiked', {gameId: this.id,isLiked: !this.isLiked});
+           
+		},
 
     },
  
@@ -71,7 +91,6 @@ export default {
         width: 100%;
     }
 
-
     h3{
         margin: 0.5rem;
         font-family: Orbitron ;
@@ -80,6 +99,7 @@ export default {
     .game-list{    
         display: flex;
         width: 31rem;
+        min-height: 8rem;
         text-align: start;
         padding: 1rem;
         margin: 1rem;
@@ -92,12 +112,17 @@ export default {
         scale: 1.05;
     }
 
+    .image_like{
+        margin-right: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        
+    }
 
     .game-list>div>img{
-        padding-right: 1rem;
-        width:10rem;
+        width:11rem;
         object-fit: contain;
-        
     }
 
     .details-game{
@@ -111,8 +136,26 @@ export default {
         font-size: 0.8rem;
     }
 
-   
+    .like {
+        cursor: pointer;
+        height: 100px;
+        width: 100px;
+        background-image: url(https://abs.twimg.com/a/1446542199/img/t1/web_heart_animation.png);
+        position: absolute;
+        transform: translate(-40%, 75%);
+    }
+    .anim-like {
+        animation-name: anim-like;
+        animation-duration: 0.8s;
+        animation-timing-function: steps(28); 
+        background-position: right;
+    }
+    @keyframes anim-like {
+        from{background-position: left;}
+        to{background-position: right;}
+    }
 
    
 
 </style>
+

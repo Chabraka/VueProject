@@ -5,11 +5,12 @@
       <h1>Free Games</h1>
    
   </header>
-
+  
   <main>
-        <GamesGallery />
 
-
+    <router-view></router-view>
+        
+        
   </main>
 
 
@@ -17,18 +18,10 @@
 
 <script>
 
-  import GamesGallery from './components/GamesGallery.vue';
 
 
   export default {
     name : 'App',
-
-    components : {
-      GamesGallery,
-
-    }
-    
-
 
   }
   
