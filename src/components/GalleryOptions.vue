@@ -22,8 +22,9 @@
             </li>
 
             <li>
-                <router-link to="/favorites"><i  class="fa-solid fa-heart fa-lg"></i></router-link>
-                
+                <i :class="{ 'heartactive': gamesSortFavorites, 'favorites': favorites.length > 1 }" @click="toggleSortFavorites()" class="fa-solid fa-heart fa-lg"></i>
+
+      
             </li>
 
             <li class="drop-btn">
@@ -77,10 +78,15 @@ export default {
             required: true
         },
         gridView: Boolean,
+        gamesSortFavorites: Boolean,
+        favorites: {
+            type: Array,
+            required: true
+        },
 
   },
 
-  emits: ["update:search", "update:gamesSortType", "update:gamesFilterPlat", "update:gamesFilterGenre", "update:gridView"],
+  emits: ["update:search", "update:gamesSortType", "update:gamesFilterPlat", "update:gamesFilterGenre", "update:gridView", "toggleSortFavorites"],
 
 	watch: {
 
@@ -101,8 +107,12 @@ export default {
         },
 
         gridView: function(newGridView){
-             localStorage.setItem("gridView", newGridView)
-         },
+            localStorage.setItem("gridView", newGridView)
+        },
+
+        gamesSortFavorites: function(newGamesSortFavorites){
+            localStorage.setItem("gamesSortFavorites", newGamesSortFavorites)
+        },
 
 
 	},
@@ -145,9 +155,14 @@ export default {
 		},
 
         onGridViewChanged(value) {
-             this.$emit('update:gridView', value) 
+            this.$emit('update:gridView', value) 
         },
-        
+
+        toggleSortFavorites() {
+            this.$emit("toggleSortFavorites");
+        },
+  
+
 	}
     
 }
@@ -156,7 +171,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .gallery-options{
         display: flex;
         flex-wrap: wrap;
@@ -210,6 +225,26 @@ export default {
     .display i:hover {
     color: #2eb7eb;
     }
+
+    .heartactive{
+        color : yellow;
+    }
+
+    .favorites{
+    
+       position: relative;
+    }
+
+    .favorites::after {
+        content: "";
+        position: absolute;
+        top: -5px; /* Ajustez la position verticale du point selon vos besoins */
+        right: -5px; /* Ajustez la position horizontale du point selon vos besoins */
+        width: 10px; /* Ajustez la taille du point selon vos besoins */
+        height: 10px; /* Ajustez la taille du point selon vos besoins */
+        background-color: red; /* Couleur du point */
+        border-radius: 50%; /* Rend le point circulaire */
+        }
     
     .drop-content{
         display: none;

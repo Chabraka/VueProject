@@ -3,11 +3,12 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import App from './App.vue'
 
 import GamesGallery from "./components/GamesGallery.vue"
-import FavoriteGames from "./components/FavoriteGames.vue"
+
+
 
 const routes = [
   { path: '/', component: GamesGallery },
-  { path: '/favorites', component: FavoriteGames },
+
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 

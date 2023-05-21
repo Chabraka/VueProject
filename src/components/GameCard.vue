@@ -44,7 +44,7 @@ export default {
 
         isLiked: {
             type: Boolean,
-            default: false 
+            default: false
         },
 
         gridView: Boolean,
@@ -59,6 +59,7 @@ export default {
 
         onIsLikedChanged() {
             console.log("Emit Like: " + this.id);
+            console.log("isLike: " + this.isLiked);
             this.$emit('toggleLike', this.id);
         },
            

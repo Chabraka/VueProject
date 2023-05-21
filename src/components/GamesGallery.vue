@@ -6,6 +6,9 @@
     v-model:gamesFilterGenre="gamesFilterGenre"
     :gamesFilteredGenreData="gamesFilteredGenreData"
     v-model:gridView="gridView"
+    v-model:gamesSortFavorites="gamesSortFavorites"
+    @toggleSortFavorites="toggleSortFavorites"
+    :favorites="favorites"
     />
 
 
@@ -13,7 +16,7 @@
 
         <GameCard 
 
-            v-for="game in gamesFilteredGenreData" 
+            v-for="game in gamesFilteredFavoritesData" 
             :key="game.id"
             :id="game.id"
             :title="game.title"
@@ -25,9 +28,7 @@
             @toggleLike="toggleLike(game.id)" 
             :isLiked="isGameLiked(game.id)"
        
-
-            :gridView="gridView"
-            
+            :gridView="gridView"     
         />
     
              
@@ -79,23 +80,23 @@
             gamesFilterPlat: localStorage.getItem("gamesFilterPlat") || "All",
             gamesFilterGenre: localStorage.getItem("gamesFilterGenre") || "default",
 
-            gridView: localStorage.getItem("gridView") === "true",
-           
+            gridView: localStorage.getItem("gridView") === true,
+            
+            gamesSortFavorites: localStorage.getItem("gamesSortFavorites") === false,
         }
     },
-
-    
 
     created: function(){
 
         this.retrieveGamesData();
-
-        const favoritesCookie = getCookie('favorites');
+        
+        let favoritesCookie = getCookie('favorites');
         if (favoritesCookie) {
-            this.favorites = JSON.parse(favoritesCookie);
+            this.favorites = JSON.parse(favoritesCookie); 
         }
-
     },
+
+
 
     computed: {
         searchingList(){
@@ -122,7 +123,6 @@
 
         gamesFilteredPlatData: function() {        
             let filteredData = this.gamesOrganizedData;
-            console.log(this.gamesFilterPlat)
             if (this.gamesFilterPlat !== 'All') {
                 filteredData = filteredData.filter(item => item.platform === this.gamesFilterPlat);
             }
@@ -135,7 +135,23 @@
             filteredData = filteredData.filter(game => game.genre === this.gamesFilterGenre);
         }
         return filteredData;
+        },
+
+        gamesFilteredFavoritesData: function() {
+            let favoritesData = this.gamesFilteredGenreData;
+            if (this.gamesSortFavorites === true) {
+                favoritesData = favoritesData.filter(game => this.favorites.includes(game.id));
+            }
+            return favoritesData;
+        },
+
+        isGameLiked() {
+            return function(gameId) {
+                return this.favorites.includes(gameId);
+            }
         }
+
+        
     },
 
   
@@ -145,28 +161,29 @@
             this.gamesData = await getGamesData()
         },
 
-        isGameLiked(gameId) {
-            return this.favorites.includes(gameId);
-        },
-
+        
         toggleLike(gameId) {
+            console.log(document.cookie);
             const game = this.gamesFilteredGenreData.find(game => game.id === gameId);
+            console.log(game.isLiked)
             if (game) {
+                
                 game.isLiked = !game.isLiked;
                 
                 if (game.isLiked) {
                     this.favorites.push(game.id);
-                } else {
+                }
+                else {
                     const index = this.favorites.indexOf(game.id);
                     if (index !== -1) {
                         this.favorites.splice(index, 1);
                     }
                 }
-                //const isliked = Boolean(!game.isLiked);
-                //console.log(this.isLiked);
+
                 setCookie('favorites', JSON.stringify(this.favorites), 30);
-                
+            
                 console.log(document.cookie);
+                /* Supprimer les cookies si y a un soucis */
                 /*var Cookies = document.cookie.split(';');
                 // set past expiry to all cookies
                 for (var i = 0; i < Cookies.length; i++) {
@@ -174,9 +191,14 @@
                 }*/
             }
         },
+
+        toggleSortFavorites() {
+            this.gamesSortFavorites = !this.gamesSortFavorites;
+            localStorage.setItem("gamesSortFavorites", this.gamesSortFavorites);
+        },
         
     },
-  }
+}
  
   </script>
   
