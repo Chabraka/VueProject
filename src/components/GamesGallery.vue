@@ -69,6 +69,7 @@
         GalleryOptions
     },
 
+
     data() {
         return {
             gamesData : [],
@@ -89,13 +90,12 @@
     created: function(){
 
         this.retrieveGamesData();
-        
+
         let favoritesCookie = getCookie('favorites');
         if (favoritesCookie) {
             this.favorites = JSON.parse(favoritesCookie); 
         }
     },
-
 
 
     computed: {
@@ -145,18 +145,14 @@
             return favoritesData;
         },
 
-        isGameLiked() {
-            return function(gameId) {
-                return this.favorites.includes(gameId);
-            }
-        }
 
         
     },
 
   
     methods: {
-      
+
+        
         async retrieveGamesData(){
             this.gamesData = await getGamesData()
         },
@@ -166,11 +162,8 @@
             console.log(document.cookie);
             const game = this.gamesFilteredGenreData.find(game => game.id === gameId);
             console.log(game.isLiked)
-            if (game) {
-                
-                game.isLiked = !game.isLiked;
-                
-                if (game.isLiked) {
+            if (game) {                
+                if (!this.isGameLiked(game.id)) {
                     this.favorites.push(game.id);
                 }
                 else {
@@ -196,6 +189,12 @@
             this.gamesSortFavorites = !this.gamesSortFavorites;
             localStorage.setItem("gamesSortFavorites", this.gamesSortFavorites);
         },
+
+        
+        isGameLiked(gameId) {
+            return this.favorites.includes(gameId);
+        },
+      
         
     },
 }
