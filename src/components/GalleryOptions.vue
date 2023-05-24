@@ -223,11 +223,11 @@ export default {
     cursor: pointer;
     }
     .display i:hover {
-    color: #2eb7eb;
+        color: #2eb7eb;
     }
 
     .heartactive{
-        color : yellow;
+        color : #2eb7eb;
     }
 
     .favorites{
@@ -238,12 +238,12 @@ export default {
     .favorites::after {
         content: "";
         position: absolute;
-        top: -5px; /* Ajustez la position verticale du point selon vos besoins */
-        right: -5px; /* Ajustez la position horizontale du point selon vos besoins */
-        width: 10px; /* Ajustez la taille du point selon vos besoins */
-        height: 10px; /* Ajustez la taille du point selon vos besoins */
-        background-color: red; /* Couleur du point */
-        border-radius: 50%; /* Rend le point circulaire */
+        top: -5px; 
+        right: -5px; 
+        width: 10px; 
+        height: 10px; 
+        background-color: red; 
+        border-radius: 50%; 
         }
     
     .drop-content{

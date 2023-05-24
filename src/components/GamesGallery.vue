@@ -4,6 +4,8 @@
     v-model:gamesSortType="gamesSortType"
     v-model:gamesFilterPlat="gamesFilterPlat"
     v-model:gamesFilterGenre="gamesFilterGenre"
+
+
     :gamesFilteredGenreData="gamesFilteredGenreData"
     v-model:gridView="gridView"
     v-model:gamesSortFavorites="gamesSortFavorites"
@@ -99,11 +101,13 @@
 
 
     computed: {
+        
         searchingList(){
             return this.gamesData.filter((gamesData) => {
                 return gamesData.title.toLowerCase().includes(this.search.toLowerCase());
             })
         },
+        
         
         gamesOrganizedData: function() {
             let sortedData = this.gamesData.slice()
@@ -121,6 +125,7 @@
 
         },
 
+
         gamesFilteredPlatData: function() {        
             let filteredData = this.gamesOrganizedData;
             if (this.gamesFilterPlat !== 'All') {
@@ -130,11 +135,11 @@
         },
 
         gamesFilteredGenreData: function() {
-        let filteredData = this.gamesFilteredPlatData;
-        if (this.gamesFilterGenre !== 'default') {
-            filteredData = filteredData.filter(game => game.genre === this.gamesFilterGenre);
-        }
-        return filteredData;
+            let filteredData = this.gamesFilteredPlatData;
+            if (this.gamesFilterGenre !== 'default') {
+                filteredData = filteredData.filter(game => game.genre === this.gamesFilterGenre);
+            }
+            return filteredData;
         },
 
         gamesFilteredFavoritesData: function() {
@@ -144,14 +149,11 @@
             }
             return favoritesData;
         },
-
-
         
     },
 
   
     methods: {
-
         
         async retrieveGamesData(){
             this.gamesData = await getGamesData()
@@ -161,7 +163,6 @@
         toggleLike(gameId) {
             console.log(document.cookie);
             const game = this.gamesFilteredGenreData.find(game => game.id === gameId);
-            console.log(game.isLiked)
             if (game) {                
                 if (!this.isGameLiked(game.id)) {
                     this.favorites.push(game.id);
@@ -172,9 +173,7 @@
                         this.favorites.splice(index, 1);
                     }
                 }
-
                 setCookie('favorites', JSON.stringify(this.favorites), 30);
-            
                 console.log(document.cookie);
                 /* Supprimer les cookies si y a un soucis */
                 /*var Cookies = document.cookie.split(';');

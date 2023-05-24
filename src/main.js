@@ -3,13 +3,13 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import App from './App.vue'
 
 import GamesGallery from "./components/GamesGallery.vue"
-
+import CardDetails from "./components/CardDetails.vue"
 
 
 const routes = [
   { path: '/', component: GamesGallery },
-
-  { path: '/:pathMatch(.*)*', redirect: '/' },
+  { path: '/game/:id', component: CardDetails },
+  //{ path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 
 const router = createRouter({

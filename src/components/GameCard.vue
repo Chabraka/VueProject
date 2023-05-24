@@ -1,14 +1,19 @@
 <template>
 
-    <div v-show="gridView" class="game-card">
-        <img :src="thumbnail" :alt="title">
-        <h3> {{ title }} </h3>
-    </div>
+    <router-link :to="'/game/' + id" class="router-link-no-style"> 
+        <div v-show="gridView" class="game-card">
+            <img :src="thumbnail" :alt="title">
+            <h3> {{ title }} </h3>
+        </div>
+    </router-link>
 
     <div v-show="!gridView" class="game-list">
         <div class="image_like">
             <img :src="thumbnail" :alt="title">
             <div class="like" :class="{ 'anim-like': isLiked }" @click="onIsLikedChanged"></div>
+            <router-link :to="'/game/' + id" class="router-link-no-style">
+                <div class="plus"><i class="fa-solid fa-plus fa-xl"></i></div>
+            </router-link>
             
         </div>
         
@@ -152,11 +157,29 @@ export default {
         animation-timing-function: steps(28); 
         background-position: right;
     }
+
     @keyframes anim-like {
         from{background-position: left;}
         to{background-position: right;}
     }
 
+    .plus{
+        cursor: pointer;
+        position: absolute;
+        transform: translate(130%, 35%);
+        padding:0.3rem;
+        border: 1px solid #2eb7eb;
+        border-radius: 30px;
+    }
+
+    .plus:hover{
+        color: #2eb7eb;
+    }
+
+    .router-link-no-style {
+        color: inherit;
+        text-decoration: none;
+    }
    
 
 </style>
