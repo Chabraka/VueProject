@@ -4,8 +4,6 @@
     v-model:gamesSortType="gamesSortType"
     v-model:gamesFilterPlat="gamesFilterPlat"
     v-model:gamesFilterGenre="gamesFilterGenre"
-
-
     :gamesFilteredGenreData="gamesFilteredGenreData"
     v-model:gridView="gridView"
     v-model:gamesSortFavorites="gamesSortFavorites"
@@ -175,12 +173,6 @@
                 }
                 setCookie('favorites', JSON.stringify(this.favorites), 30);
                 console.log(document.cookie);
-                /* Supprimer les cookies si y a un soucis */
-                /*var Cookies = document.cookie.split(';');
-                // set past expiry to all cookies
-                for (var i = 0; i < Cookies.length; i++) {
-                document.cookie = Cookies[i] + "=; expires="+ new Date(0).toUTCString();
-                }*/
             }
         },
 

@@ -172,7 +172,7 @@ export default {
 </script>
 
 <style scoped>
-.gallery-options{
+    .gallery-options{
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
@@ -266,4 +266,5 @@ export default {
         display: flex;
         flex-direction: column;
     }
+    
 </style>
