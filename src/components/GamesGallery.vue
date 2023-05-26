@@ -1,49 +1,53 @@
 <template>
 
-    <GalleryOptions v-model:search="search" 
-    v-model:gamesSortType="gamesSortType"
-    v-model:gamesFilterPlat="gamesFilterPlat"
-    v-model:gamesFilterGenre="gamesFilterGenre"
-    :gamesFilteredGenreData="gamesFilteredGenreData"
-    v-model:gridView="gridView"
-    v-model:gamesSortFavorites="gamesSortFavorites"
-    @toggleSortFavorites="toggleSortFavorites"
-    :favorites="favorites"
-    />
+    <div>
 
-
-    <div class="games-gallery">
-
-        <GameCard 
-
-            v-for="game in gamesFilteredFavoritesData" 
-            :key="game.id"
-            :id="game.id"
-            :title="game.title"
-            :thumbnail="game.thumbnail"
-            :short_description="game.short_description"  
-            :genre="game.genre"
-            :platform="game.platform"
-
-            @toggleLike="toggleLike(game.id)" 
-            :isLiked="isGameLiked(game.id)"
-       
-            :gridView="gridView"     
+        <GalleryOptions v-model:search="search" 
+        v-model:gamesSortType="gamesSortType"
+        v-model:gamesFilterPlat="gamesFilterPlat"
+        v-model:gamesFilterGenre="gamesFilterGenre"
+        :gamesFilteredGenreData="gamesFilteredGenreData"
+        v-model:gridView="gridView"
+        v-model:gamesSortFavorites="gamesSortFavorites"
+        @toggleSortFavorites="toggleSortFavorites"
+        :favorites="favorites"
         />
-    
-             
-    </div>
 
 
-    <div v-if="search && searchingList.length == []">
-        <h2>Oups</h2>
-        <p>Aucun résultat trouvé</p>
+        <div class="games-gallery">
 
-    </div>
+            <GameCard 
 
-    <div v-if="!search && searchingList.length == []">
-        <h2>Loading ...</h2>
-        <i class="fas fa-spinner fa-pulse fa-xl"></i>
+                v-for="game in gamesFilteredFavoritesData" 
+                :key="game.id"
+                :id="game.id"
+                :title="game.title"
+                :thumbnail="game.thumbnail"
+                :short_description="game.short_description"  
+                :genre="game.genre"
+                :platform="game.platform"
+
+                @toggleLike="toggleLike(game.id)" 
+                :isLiked="isGameLiked(game.id)"
+        
+                :gridView="gridView"     
+            />
+        
+                
+        </div>
+
+
+        <div v-if="search && searchingList.length == []">
+            <h2>Oups</h2>
+            <p>Aucun résultat trouvé</p>
+
+        </div>
+
+        <div v-if="!search && searchingList.length == []">
+            <h2>Loading ...</h2>
+            <i class="fas fa-spinner fa-pulse fa-xl"></i>
+
+        </div>
 
     </div>
   
@@ -193,10 +197,12 @@
   </script>
   
   <style scoped>
-   .games-gallery{
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
+
+    .games-gallery{
+    display: flex;
+    justify-content: center;
+    padding-top: 3rem;
+    flex-wrap: wrap;
     }
     
   </style>

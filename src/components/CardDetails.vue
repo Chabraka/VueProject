@@ -1,5 +1,6 @@
 <template>
 
+    <div>
 
         <div class="game-details">
             <div>
@@ -35,12 +36,14 @@
             </router-link>
             <a :href="game.game_url" class="play-button">Play <i class="fa-solid fa-gamepad fa-xl"></i></a>
         </div>
-
+    
+    </div>
         
 
   </template>
   
   <script>
+
   import getUniqueGameData from '@/services/api/uniqueGameAPI';
   
   export default {

@@ -22,7 +22,7 @@
             </li>
 
             <li>
-                <i :class="{ 'heartactive': gamesSortFavorites, 'favorites': favorites.length > 1 }" @click="toggleSortFavorites()" class="fa-solid fa-heart fa-lg"></i>
+                <i :class="{ 'heart-active': gamesSortFavorites, 'favorites': favorites.length > 1 }" @click="toggleSortFavorites()" class="fa-solid fa-heart fa-lg"></i>
 
       
             </li>
@@ -226,7 +226,7 @@ export default {
         color: #2eb7eb;
     }
 
-    .heartactive{
+    .heart-active{
         color : #2eb7eb;
     }
 
