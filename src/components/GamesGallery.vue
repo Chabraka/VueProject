@@ -85,9 +85,9 @@
             gamesFilterPlat: localStorage.getItem("gamesFilterPlat") || "All",
             gamesFilterGenre: localStorage.getItem("gamesFilterGenre") || "default",
 
-            gridView: localStorage.getItem("gridView") === true,
+            gridView: localStorage.getItem("gridView") === 'true',
             
-            gamesSortFavorites: localStorage.getItem("gamesSortFavorites") === false,
+            gamesSortFavorites: localStorage.getItem("gamesSortFavorites") === 'false',
         }
     },
 

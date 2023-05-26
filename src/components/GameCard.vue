@@ -1,37 +1,35 @@
 <template>
 
-    <div>
-
+    
+    <div v-show="gridView" class="game-card">
         <router-link :to="'/game/' + id" class="router-link-no-style"> 
-            <div v-show="gridView" class="game-card">
-                <img :src="thumbnail" :alt="title">
-                <h3> {{ title }} </h3>
-            </div>
+            <img class="game-thumbnail" :src="thumbnail" :alt="title">
+            <h3> {{ title }} </h3>
         </router-link>
+    </div>
+    
 
-        <div v-show="!gridView" class="game-list">
-            <div class="image_like">
-                <img :src="thumbnail" :alt="title">
-                <div class="like" :class="{ 'anim-like': isLiked }" @click="onIsLikedChanged"></div>
-                <router-link :to="'/game/' + id" class="router-link-no-style">
-                    <div class="plus"><i class="fa-solid fa-plus fa-xl"></i></div>
-                </router-link>
-                
-            </div>
+    <div v-show="!gridView" class="game-list">
+        <div class="image_like">
+            <img :src="thumbnail" :alt="title">
+            <div class="like" :class="{ 'anim-like': isLiked }" @click="onIsLikedChanged"></div>
+            <router-link :to="'/game/' + id" class="router-link-no-style">
+                <div class="plus"><i class="fa-solid fa-plus fa-xl"></i></div>
+            </router-link>
             
-
-            <div>
-                <h3> {{ title }} </h3>
-                <p> {{ short_description }} </p>
-                <div class="details-game">
-                    <p> {{ genre }} </p>
-                    <p> {{ platform }} </p>
-                </div>
-            </div>
         </div>
         
-    </div>
 
+        <div>
+            <h3> {{ title }} </h3>
+            <p> {{ short_description }} </p>
+            <div class="details-game">
+                <p> {{ genre }} </p>
+                <p> {{ platform }} </p>
+            </div>
+        </div>
+    </div>
+    
 
 </template>
 
@@ -97,7 +95,7 @@ export default {
         scale: 1.05;
     }
 
-    .game-card>img{
+    .game-thumbnail{
         width: 100%;
     }
 
